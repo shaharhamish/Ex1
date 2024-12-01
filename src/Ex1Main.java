@@ -1,4 +1,4 @@
-package assignments.ex1;
+//package assignments.ex1;
 import java.util.Scanner;
 
 /**
