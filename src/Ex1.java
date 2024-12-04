@@ -115,6 +115,8 @@ public class Ex1 {
      * @return true iff the two numbers have the same values.
      */
     public static boolean equals(String n1, String n2) {
+        // Validate numbers before comparing
+        if (!isNumber(n1) || !isNumber(n2)) return false; // Hebrew: ודא שהמספרים חוקיים
         return number2Int(n1) == number2Int(n2);
     }
 
@@ -130,7 +132,7 @@ public class Ex1 {
      */
     public static int maxIndex(String[] arr) {
         int maxIndex = -1;
-        int maxValue = 1;
+        int maxValue = Integer.MIN_VALUE; // Hebrew: התחלה עם ערך מינימלי
 
         for (int i = 0; i < arr.length; i++) {
             int value = number2Int(arr[i]);
@@ -139,7 +141,6 @@ public class Ex1 {
                 maxIndex = i;
             }
         }
-
-        return maxIndex;
+        return maxIndex; // Hebrew: החזר את האינדקס עם הערך המקסימלי
     }
 }
