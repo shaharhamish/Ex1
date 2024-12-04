@@ -20,19 +20,25 @@ public class Ex1 {
      * @return
      */
     public static int number2Int(String num) {
-        int baseIndex = num.lastIndexOf('b');
-        String numberPart = num.substring(0, baseIndex);
-        int base = Integer.parseInt(num.substring(baseIndex + 1));
-        if (base == -1) return -1;
+        // Verify that the number format is valid
+        if (!isNumber(num)) return -1; // Hebrew: אם הפורמט אינו חוקי, החזר -1
 
-        int result = 0;
-        for (char c : numberPart.toUpperCase().toCharArray()) {
-            int digitValue = Character.digit(c, base);
-            if (digitValue < 0) return -1; // Invalid digit for the base
-            result = result * base + digitValue;
+        try {
+            int baseIndex = num.lastIndexOf('b');
+            String numberPart = num.substring(0, baseIndex);
+            int base = Integer.parseInt(num.substring(baseIndex + 1));
+
+            int result = 0;
+            for (char c : numberPart.toUpperCase().toCharArray()) {
+                int digitValue = Character.digit(c, base);
+                if (digitValue < 0) return -1; // Invalid digit for the base
+                result = result * base + digitValue;
+            }
+            return result;
+        } catch (Exception e) {
+            // Handle exceptions, like invalid substring indexes or number formats
+            return -1; // Hebrew: טיפול בשגיאות אם מתעוררות בעיבוד המחרוזת
         }
-
-        return result;
     }
     /**
      * This static function checks if the given String (g) is in a valid "number"
