@@ -1,4 +1,3 @@
-//package assignments.ex1;
 /**
  * This class represents a simple solution for Ex1.
  * As defined here:
@@ -21,7 +20,6 @@ public class Ex1 {
      * @return
      */
     public static int number2Int(String num) {
-        // add your code here
         int baseIndex = num.lastIndexOf('b');
         String numberPart = num.substring(0, baseIndex);
         int base = Integer.parseInt(num.substring(baseIndex + 1));
@@ -35,7 +33,6 @@ public class Ex1 {
         }
 
         return result;
-        ////////////////////
     }
     /**
      * This static function checks if the given String (g) is in a valid "number"
@@ -44,11 +41,11 @@ public class Ex1 {
      * @return true iff the given String is in a number format
      */
     public static boolean isNumber(String a) {
-        boolean ans = true;
-        if (a == null || a.isEmpty()) return false;
+        // Handle null or empty strings
+        if (a == null || a.isEmpty()) return false; // Hebrew: בדוק אם הקלט ריק או null
 
         int baseIndex = a.lastIndexOf('b');
-        if (baseIndex <= 0 || baseIndex == a.length() - 1) return false;
+        if (baseIndex <= 0 || baseIndex == a.length() - 1) return false; // b position check
 
         String numberPart = a.substring(0, baseIndex);
         String basePart = a.substring(baseIndex + 1);
@@ -61,8 +58,7 @@ public class Ex1 {
         for (char c : numberPart.toUpperCase().toCharArray()) {
             if (Character.digit(c, base) < 0) return false; // Invalid character for the base
         }
-
-        return true;
+        return true; // Hebrew: כל החלקים תקינים
     }
 
     private static int parseBase(String baseStr) {
@@ -122,7 +118,7 @@ public class Ex1 {
      */
     public static int maxIndex(String[] arr) {
         int maxIndex = -1;
-        int maxValue = Integer.MIN_VALUE;
+        int maxValue = 1;
 
         for (int i = 0; i < arr.length; i++) {
             int value = number2Int(arr[i]);
