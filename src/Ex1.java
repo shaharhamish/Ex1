@@ -67,11 +67,17 @@ public class Ex1 {
         return true; // Hebrew: כל החלקים תקינים
     }
 
+    /**
+     * Parses a base string into an integer.
+     * Returns -1 if the base string is invalid.
+     * @param baseStr the base part of the number
+     * @return the parsed base or -1 if invalid
+     */
     private static int parseBase(String baseStr) {
         if (baseStr == null || baseStr.isEmpty()) return -1;
         int base = 0;
         for (char c : baseStr.toCharArray()) {
-            if (c < '0' || c > '9') return -1;
+            if (c < '0' || c > '9') return -1; // Hebrew: הבסיס חייב להיות מורכב ממספרים בלבד
             base = base * 10 + (c - '0');
         }
         return (base >= 2 && base <= 16) ? base : -1;
