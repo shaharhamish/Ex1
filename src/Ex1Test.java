@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Make sure you complete all the needed JUnits
  */
 public class Ex1Test {
-      assignments.ex1.Ex1 ex1 = new assignments.ex1.Ex1();
+      Ex1 ex1 = new Ex1();
         @Test
         void computeNumberTest() {
             String s2 = "1011b2";
