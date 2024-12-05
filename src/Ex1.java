@@ -20,26 +20,31 @@ public class Ex1 {
      * @return
      */
     public static int number2Int(String num) {
-        // Verify that the number format is valid
-        if (!isNumber(num)) return -1; // Hebrew: אם הפורמט אינו חוקי, החזר -1
-
-        try {
-            int baseIndex = num.lastIndexOf('b');
-            String numberPart = num.substring(0, baseIndex);
-            int base = Integer.parseInt(num.substring(baseIndex + 1));
-
-            int result = 0;
-            for (char c : numberPart.toUpperCase().toCharArray()) {
-                int digitValue = Character.digit(c, base);
-                if (digitValue < 0) return -1; // Invalid digit for the base
-                result = result * base + digitValue;
+        // אם הקלט לא מכיל 'b', נניח שזה מספר בבסיס 10
+        if (!num.contains("b")) {
+            try {
+                return Integer.parseInt(num); // המרת המחרוזת למספר שלם בבסיס 10
+            } catch (NumberFormatException e) {
+                return -1; // אם לא מצליחים להמיר מספר לא תקין, מחזירים -1
             }
-            return result;
-        } catch (Exception e) {
-            // Handle exceptions, like invalid substring indexes or number formats
-            return -1; // Hebrew: טיפול בשגיאות אם מתעוררות בעיבוד המחרוזת
         }
+
+        // אם כן יש 'b', ממשיכים לפי הקוד הקיים
+        int baseIndex = num.lastIndexOf('b');
+        String numberPart = num.substring(0, baseIndex);
+        int base = Integer.parseInt(num.substring(baseIndex + 1));
+        if (base == -1) return -1;
+
+        int result = 0;
+        for (char c : numberPart.toUpperCase().toCharArray()) {
+            int digitValue = Character.digit(c, base);
+            if (digitValue < 0) return -1; // Invalid digit for the base
+            result = result * base + digitValue;
+        }
+
+        return result;
     }
+
     /**
      * This static function checks if the given String (g) is in a valid "number"
      * format.
@@ -47,11 +52,22 @@ public class Ex1 {
      * @return true iff the given String is in a number format
      */
     public static boolean isNumber(String a) {
-        // Handle null or empty strings
-        if (a == null || a.isEmpty()) return false; // Hebrew: בדוק אם הקלט ריק או null
+        // אם הקלט לא מכיל 'b', נבדוק אם מדובר במספר שלם בבסיס 10
+        if (!a.contains("b")) {
+            try {
+                Integer.parseInt(a); // מנסים להמיר את המחרוזת למספר בבסיס 10
+                return true; // אם הצלחנו להמיר, זהו מספר חוקי בבסיס 10
+            } catch (NumberFormatException e) {
+                return false; // אם לא הצלחנו להמיר, זה לא מספר חוקי
+            }
+        }
+
+        // אם יש 'b', ממשיכים לפי הבדיקות הקודמות
+        boolean ans = true;
+        if (a == null || a.isEmpty()) return false;
 
         int baseIndex = a.lastIndexOf('b');
-        if (baseIndex <= 0 || baseIndex == a.length() - 1) return false; // b position check
+        if (baseIndex <= 0 || baseIndex == a.length() - 1) return false;
 
         String numberPart = a.substring(0, baseIndex);
         String basePart = a.substring(baseIndex + 1);
@@ -64,8 +80,10 @@ public class Ex1 {
         for (char c : numberPart.toUpperCase().toCharArray()) {
             if (Character.digit(c, base) < 0) return false; // Invalid character for the base
         }
-        return true; // Hebrew: כל החלקים תקינים
+
+        return true;
     }
+
 
     /**
      * Parses a base string into an integer.
