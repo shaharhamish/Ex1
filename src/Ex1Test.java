@@ -107,4 +107,18 @@ public class Ex1Test {
         assertEquals(-1, Ex1.number2Int("123b1")); // Base less than 2
         assertEquals(-1, Ex1.number2Int(null)); // Null input
     }
+
+    @Test
+    void conversionConsistencyTest() {
+        int[] testValues = {0, 1, 42, 255, 1023};
+        int[] bases = {2, 8, 10, 16};
+
+        for (int value : testValues) {
+            for (int base : bases) {
+                String representation = Ex1.int2Number(value, base);
+                int backToDecimal = Ex1.number2Int(representation);
+                assertEquals(value, backToDecimal, "Failed for value: " + value + " in base: " + base);
+            }
+        }
+    }
     }
