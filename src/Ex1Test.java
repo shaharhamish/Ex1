@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Make sure you complete all the needed JUnits
  */
 public class Ex1Test {
-      Ex1 ex1 = new Ex1();
+        Ex1 ex1 = new Ex1();
         @Test
         void computeNumberTest() {
             String s2 = "1011b2";
@@ -45,7 +45,6 @@ public class Ex1Test {
 
         @Test
         void maxIndexTest() {
-            Ex1 ex1 = new Ex1();
             String[] arr1 = {"135b", "100b", "234b"};
             assertEquals(2, Ex1.maxIndex(arr1));
 
@@ -86,6 +85,19 @@ public class Ex1Test {
         assertFalse(Ex1.equals("100111b2", "62b10"));
 
         assertTrue(Ex1.equals("012b10", "12b10")); // Test with leading zeros
+    }
+
+    @Test
+    void edgeCasesTest() {
+        assertEquals(0, Ex1.number2Int("0b2")); // Smallest valid binary
+        assertEquals(0, Ex1.number2Int("0b10")); // Smallest valid decimal
+        assertEquals(0, Ex1.number2Int("0b16")); // Smallest valid hexadecimal
+
+        assertEquals(-1, Ex1.number2Int("")); // Empty string
+        assertEquals(-1, Ex1.number2Int(null)); // Null value
+
+        assertEquals("", Ex1.int2Number(0, 1)); // Invalid base
+        assertEquals("", Ex1.int2Number(-5, 10)); // Negative number
     }
         // Add additional test functions - test as much as you can.
     }
