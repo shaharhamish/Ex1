@@ -1,10 +1,10 @@
 
-###**Ex1: Number Format Converter and Calculator**
-####**Overview**
+### **Ex1: Number Format Converter and Calculator**
+#### **Overview**
 This project provides a utility to convert, validate, and calculate with numbers represented in various bases (from binary to hexadecimal, bases 2–16). Numbers are represented as strings in the format <number><b><base>. The program includes functionality to compare numbers, find the maximum value in an array of numbers, and parse complex input strings.
 
-####**Features**
-- **Base Conversion:**
+#### **Features**
+- **Base Conversion:** 
 -    Converts numbers from any valid base (2–16) to decimal (base 10).
 -    Converts decimal numbers to any valid base (2–16).
 - **Validation:**
@@ -20,7 +20,7 @@ This project provides a utility to convert, validate, and calculate with numbers
 - **Input Parsing:**
     Splits and processes complex input strings (e.g., "11b2 12b3" into two separate numbers).
   
-####**Number Format**
+#### **Number Format**
 - **Valid Numbers:** <number><b><base>
 **Examples:**
 -    "101b2" → Binary representation of 5.
@@ -36,7 +36,7 @@ This project provides a utility to convert, validate, and calculate with numbers
 -    Numbers without a base (e.g., "123b").
 -    Unsupported bases (e.g., "123b20").
 -    Bases represented with digits greater than 9 (e.g., "123b12").
-####**Methods and Usage**
+#### **Methods and Usage**
 - **number2Int(String num)**
 -    Converts a number string in any valid base to its decimal equivalent.
 
@@ -104,17 +104,21 @@ This project provides a utility to convert, validate, and calculate with numbers
     
     result = Ex1.splitNumbers("11b2");
     System.out.println(result); // Output: null (invalid)
-maxIndex(String[] arr)
-Finds the index of the maximum number in the given array.
+- **maxIndex(String[] arr)**
+-  Finds the index of the maximum number in the given array.
 
-Input: An array of strings representing numbers.
-Output: Index of the largest number, or -1 if the array is empty or all numbers are invalid.
-Examples:
+  Input: An array of strings representing numbers.
+  Output: Index of the largest number, or -1 if the array is empty or all numbers are invalid.
+ - **Examples:**
 
-java
-Copy code
-String[] arr = {"11b2", "101b2", "10b2"};
-System.out.println(Ex1.maxIndex(arr)); // Output: 1
+  java
+  Copy code
+  String[] arr = {"11b2", "101b2", "10b2"};
+  System.out.println(Ex1.maxIndex(arr)); // Output: 1
+  
+  arr = {"ABCb16", "2748b10", "5b10"};
+  System.out.println(Ex1.maxIndex(arr)); // Output: 0
 
-arr = {"ABCb16", "2748b10", "5b10"};
-System.out.println(Ex1.maxIndex(arr)); // Output: 0
+#### Testing
+Use the provided examples to test individual methods. Ensure inputs are correctly formatted, and edge cases (e.g., invalid formats, unsupported bases) are handled properly.
+
