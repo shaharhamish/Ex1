@@ -1,146 +1,122 @@
 /**
- * This class represents a simple solution for Ex1.
- * As defined here:
- * https://docs.google.com/document/d/1AJ9wtnL1qdEs4DAKqBlO1bXCM6r6GJ_J/r/edit/edit
- * In this assignment, we will design a number formatting converter and calculator.
- * In general, we will use Strings as numbers over basis of binary till Hexa.
- * [2-16], 10-16 are represented by A,B,..G.
- * The general representation of the numbers is as a String with the following format:
- * <number><b><base> e.g., “135bA” (i.e., “135”, as 10 is the default base), “100111b2”,
- * “12345b6”,”012b5”, “123bG”, “EFbG”.
- * The following are NOT in the format (not a valid number):
- * “b2”, “0b1”, “123b”, “1234b11”, “3b3”, “-3b5”, “3 b4”, “GbG”, "", null,
- * You should implement the following static functions:
+ * This class represents a solution for Ex1.
+ * It provides functionality to convert, validate, and compare numbers in various bases (2-16).
+ * Numbers are represented as strings in the format "<number><b><base>",
+ * where the base can be specified as a digit (2-16) or a letter (A-F for 10-16).
  */
 public class Ex1 {
+
     /**
-     * Convert the given number (num) to a decimal representation (as int).
-     * It the given number is not in a valid format returns -1.
+     * Converts the given number (num) in a specified base to its decimal (base-10) representation.
+     * If the input is not in a valid format, it returns -1.
+     *
      * @param num a String representing a number in basis [2,16]
-     * @return
+     * @return the integer value of the number in decimal, or -1 if invalid
      */
     public static int number2Int(String num) {
-        // אם אין 'b' במילת הקלט, נניח שזה מספר בבסיס 10
+        if (num == null || num.isEmpty() || num.startsWith(" ")) return -1;
+
+        // If there's no 'b', assume it's a decimal number
         if (!num.contains("b")) {
             try {
-                return Integer.parseInt(num); // המרה למספר בבסיס 10
+                return Integer.parseInt(num); // Parse as base-10 number
             } catch (NumberFormatException e) {
-                return -1; // אם לא מצליחים להמיר, מחזירים -1
+                return -1; // Return -1 for invalid format
             }
         }
 
-        // אם יש 'b', נפריד את המספר מהבסיס
+        // Split the input into the number and base parts
         int baseIndex = num.lastIndexOf('b');
-        String numberPart = num.substring(0, baseIndex);
-        String basePart = num.substring(baseIndex + 1);
+        String numberPart = num.substring(0, baseIndex).toUpperCase().trim();
+        String basePart = num.substring(baseIndex + 1).trim();
 
-        // בדיקה אם הבסיס הוא אות מ-A עד F (הבסיס הוגדר על ידי אות)
-        int base;
-        if (basePart.length() == 1 && Character.isLetter(basePart.charAt(0))) {
-            // המרה לאות מ-A עד F לבסיס 10
-            char baseChar = basePart.charAt(0);
-            if (baseChar >= 'A' && baseChar <= 'F') {
-                base = baseChar - 'A' + 10; // המרה של אות A-F לבסיס 10-15
-            } else {
-                return -1; // אם לא אות תקינה, מחזירים -1
-            }
-        } else {
-            // המרה של הבסיס כמספר
-            base = parseBase(basePart);
-            if (base < 2 || base > 16) return -1; // אם הבסיס לא תקין
-        }
+        // Parse the base
+        int base = parseBase(basePart);
+        if (base < 2 || base > 16) return -1;
 
-        // המרה של מספר המערך לבסיס המתאים
+        // Convert the number part to decimal using the parsed base
         int result = 0;
-        for (char c : numberPart.toUpperCase().toCharArray()) {
+        for (char c : numberPart.toCharArray()) {
             int digitValue = Character.digit(c, base);
-            if (digitValue < 0) return -1; // אם הדמות לא תקינה עבור הבסיס
+            if (digitValue < 0) return -1; // Invalid character for the base
             result = result * base + digitValue;
         }
 
         return result;
     }
 
-
     /**
-     * This static function checks if the given String (g) is in a valid "number"
-     * format.
+     * Checks if the given string (a) is a valid number in the format "<number><b><base>".
+     *
      * @param a a String representing a number
-     * @return true iff the given String is in a number format
+     * @return true if the input is valid, false otherwise
      */
     public static boolean isNumber(String a) {
-        // אם אין 'b' במילת הקלט, נבדוק אם מדובר במספר שלם בבסיס 10
+        if (a == null || a.isEmpty() || a.startsWith(" ")) return false;
+
+        // If no 'b', check if it's a valid decimal number
         if (!a.contains("b")) {
             try {
-                Integer.parseInt(a); // מנסים להמיר את המחרוזת למספר בבסיס 10
-                return true; // אם הצלחנו להמיר, זהו מספר חוקי בבסיס 10
+                Integer.parseInt(a); // Attempt to parse as a base-10 number
+                return true;
             } catch (NumberFormatException e) {
-                return false; // אם לא הצלחנו להמיר, זה לא מספר חוקי
+                return false;
             }
         }
 
-        // אם יש 'b', נוודא שהקלט תקין
-        boolean ans = true;
-        if (a == null || a.isEmpty()) return false;
-
+        // Split the input into the number and base parts
         int baseIndex = a.lastIndexOf('b');
-        if (baseIndex <= 0 || baseIndex == a.length() - 1) return false;
+        if (baseIndex <= 0 || baseIndex == a.length() - 1) return false; // Invalid format
 
-        String numberPart = a.substring(0, baseIndex);
-        String basePart = a.substring(baseIndex + 1);
+        String numberPart = a.substring(0, baseIndex).toUpperCase().trim();
+        String basePart = a.substring(baseIndex + 1).trim();
 
-        // המרה של הבסיס למספר
+        // Parse the base
         int base = parseBase(basePart);
-        if (base < 2 || base > 16) {
-            // אם הבסיס הוא אות מ-A עד F
-            if (basePart.length() == 1 && Character.isLetter(basePart.charAt(0))) {
-                char baseChar = basePart.charAt(0);
-                if (baseChar >= 'A' && baseChar <= 'F') {
-                    base = baseChar - 'A' + 10; // המרה של אות A-F לבסיס 10-15
-                } else {
-                    return false; // אם האות אינה תקינה
-                }
-            } else {
-                return false; // אם הבסיס אינו מספר תקין
-            }
-        }
+        if (base < 2 || base > 16) return false;
 
-        // בדיקה אם כל הדמויות תקינות עבור הבסיס
-        for (char c : numberPart.toUpperCase().toCharArray()) {
-            if (Character.digit(c, base) < 0) return false; // אם הדמות לא חוקית עבור הבסיס
+        // Validate the number part for the given base
+        for (char c : numberPart.toCharArray()) {
+            int digitValue = Character.digit(c, base);
+            if (digitValue < 0 || (base > 9 && Character.isDigit(c) && digitValue >= base)) {
+                return false; // Invalid character for the base
+            }
         }
 
         return true;
     }
 
-
-
-
     /**
-     * Parses a base string into an integer.
-     * Returns -1 if the base string is invalid.
+     * Parses the base string into an integer.
+     * If the base is invalid, it returns -1.
+     *
      * @param baseStr the base part of the number
      * @return the parsed base or -1 if invalid
      */
     private static int parseBase(String baseStr) {
         if (baseStr == null || baseStr.isEmpty()) return -1;
-        int base = 0;
-        for (char c : baseStr.toCharArray()) {
-            if (c < '0' || c > '9') return -1; // Hebrew: הבסיס חייב להיות מורכב ממספרים בלבד
-            base = base * 10 + (c - '0');
+
+        if (baseStr.length() == 1 && Character.isLetter(baseStr.charAt(0))) {
+            char baseChar = baseStr.charAt(0);
+            if (baseChar >= 'A' && baseChar <= 'F') {
+                return baseChar - 'A' + 10; // Convert A-F to 10-15
+            }
         }
-        return (base >= 2 && base <= 16) ? base : -1;
+
+        try {
+            int base = Integer.parseInt(baseStr);
+            return (base >= 2 && base <= 9) ? base : -1;
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
     /**
-     * Calculate the number representation (in basis base)
-     * of the given natural number (represented as an integer).
-     * If num<0 or base is not in [2,16] the function should return ""
-     * (the empty String).
-     * @param num the natural number (include 0).
-     * @param base the basis [2,16]
-     * @return a String representing a number (in base) equals to num, or an empty
-     * String (in case of wrong input).
+     * Converts a decimal number (num) to a string representation in the specified base.
+     *
+     * @param num  the decimal number to convert
+     * @param base the target base [2,16]
+     * @return the string representation in the given base, or an empty string if invalid
      */
     public static String int2Number(int num, int base) {
         if (num < 0 || base < 2 || base > 16) return "";
@@ -157,40 +133,38 @@ public class Ex1 {
         return sb.reverse().toString().toUpperCase() + "b" + base;
     }
 
-        /**
-         * Checks if the two numbers have the same value.
-         * @param n1 first number
-         * @param n2 second number
-         * @return true iff the two numbers have the same values.
-         */
-        public static boolean equals(String n1, String n2) {
-            // Validate numbers before comparing
-            if (!isNumber(n1) || !isNumber(n2)) return false;
+    /**
+     * Checks if two numbers (n1, n2) have the same value.
+     *
+     * @param n1 the first number
+     * @param n2 the second number
+     * @return true if both numbers are equal in value, false otherwise
+     */
+    public static boolean equals(String n1, String n2) {
+        int int1 = number2Int(n1);
+        int int2 = number2Int(n2);
 
-            // Convert both numbers to their integer representations
-            int value1 = number2Int(n1);
-            int value2 = number2Int(n2);
-
-            // If either conversion fails, they are not equal
-            if (value1 == -1 || value2 == -1) return false;
-
-            // Compare integer values
-            return value1 == value2;
+        // Return false if either number is invalid
+        if (int1 == -1 || int2 == -1) {
+            return false;
         }
 
+        return int1 == int2;
+    }
+
     /**
-     * This static function search for the array index with the largest number
-     * (in value).
-     * In case there are more than one maximum - returns the first index.
-     * Note: you can assume that the array is not null and is not empty, yet it may
-     * contain null or none-valid numbers (with value -1).
-     * @param arr an array of numbers
-     * @return the index in the array in with the largest number (in value).
+     * Finds the index of the largest number in the given array.
+     * If multiple numbers have the same maximum value, returns the first occurrence.
+     * Returns -1 if the array is null or empty.
      *
+     * @param arr an array of strings representing numbers
+     * @return the index of the largest number, or -1 if the array is null or empty
      */
     public static int maxIndex(String[] arr) {
+        if (arr == null || arr.length == 0) return -1;
+
         int maxIndex = -1;
-        int maxValue = Integer.MIN_VALUE; // Hebrew: התחלה עם ערך מינימלי
+        int maxValue = Integer.MIN_VALUE;
 
         for (int i = 0; i < arr.length; i++) {
             int value = number2Int(arr[i]);
@@ -199,6 +173,7 @@ public class Ex1 {
                 maxIndex = i;
             }
         }
-        return maxIndex; // Hebrew: החזר את האינדקס עם הערך המקסימלי
+
+        return maxIndex;
     }
 }

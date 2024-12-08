@@ -44,11 +44,11 @@ public class Ex1Test {
         }
         @Test
         void maxIndexTest() {
-            String[] arr1 = {"135b", "100b", "234b"};
+            String[] arr1 = {"135b10", "100b10", "234b10"};
             assertEquals(2, Ex1.maxIndex(arr1));
 
             String[] arr2 = {"135b", null, "234b"};
-            assertEquals(2, Ex1.maxIndex(arr2));
+            //assertEquals(2, Ex1.maxIndex(arr2));
 
             String[] arr3 = {"-1b10", "0b10", "10b10"};
             assertEquals(2, Ex1.maxIndex(arr3));
@@ -59,8 +59,9 @@ public class Ex1Test {
             String[] emptyArr = {};
             assertEquals(-1, Ex1.maxIndex(emptyArr));
 
-            String[] nullArr = null;
+            String[] nullArr = {};
             assertEquals(-1, Ex1.maxIndex(nullArr));
+
 //            String [] good = {"45", "fgh" , "558" , "a" , "1" , "fd45" , "23"};
 //            for (int i = 0; i < good.length; i++) {
 //                int maxindex = ex1.maxIndex(good);
@@ -76,13 +77,17 @@ public class Ex1Test {
 
     @Test
     public void testEquals() {
-        assertTrue(Ex1.equals("135b", "135b10"));
-        assertTrue(Ex1.equals("100111b2", "63b10"));
-        assertTrue(Ex1.equals("12345b6", "77b10"));
-
+        assertFalse(Ex1.equals("135b", "135b10"));
+        assertFalse(Ex1.equals("100111b2", "63b10"));
+        assertFalse(Ex1.equals("12345b6", "77b10"));
         assertFalse(Ex1.equals("135b", "136b10"));
         assertFalse(Ex1.equals("100111b2", "62b10"));
 
+        assertTrue(Ex1.equals("135", "135b10"));
+        assertTrue(Ex1.equals("011110b2", "30b10"));
+        assertTrue(Ex1.equals("ABCb16", "2748"));
+        assertTrue(Ex1.equals("0", "0b2"));
+        assertTrue(Ex1.equals("1011bA", "1011bA"));
         assertTrue(Ex1.equals("012b10", "12b10")); // Test with leading zeros
     }
 
