@@ -1,4 +1,4 @@
-#### **Ex1 Code Documentation**
+### **Ex1 Code Documentation**
 #### **Introduction**
 This project contains a set of utility functions designed to manipulate and process numbers represented in various bases (binary, decimal, hexadecimal, etc.) as strings. It includes functionality for converting between representations, validating input, and comparing numbers across different bases.
 
