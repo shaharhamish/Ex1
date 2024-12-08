@@ -14,31 +14,40 @@ public class Ex1 {
      * @return the integer value of the number in decimal, or -1 if invalid
      */
     public static int number2Int(String num) {
-        if (num == null || num.isEmpty() || num.startsWith(" ")) return -1;
-
-        // If there's no 'b', assume it's a decimal number
+        // אם אין 'b' במילת הקלט, נניח שזה מספר בבסיס 10
         if (!num.contains("b")) {
             try {
-                return Integer.parseInt(num); // Parse as base-10 number
+                return Integer.parseInt(num); // המרה למספר בבסיס 10
             } catch (NumberFormatException e) {
-                return -1; // Return -1 for invalid format
+                return -1; // אם לא מצליחים להמיר, מחזירים -1
             }
         }
 
-        // Split the input into the number and base parts
+        // אם יש 'b', נפריד את המספר מהבסיס
         int baseIndex = num.lastIndexOf('b');
-        String numberPart = num.substring(0, baseIndex).toUpperCase().trim();
+        String numberPart = num.substring(0, baseIndex).trim();
         String basePart = num.substring(baseIndex + 1).trim();
 
-        // Parse the base
-        int base = parseBase(basePart);
-        if (base < 2 || base > 16) return -1;
+        // בדיקה אם הבסיס הוא אות מ-A עד G
+        int base;
+        if (basePart.length() == 1 && Character.isLetter(basePart.charAt(0))) {
+            char baseChar = basePart.charAt(0);
+            if (baseChar >= 'A' && baseChar <= 'G') {
+                base = baseChar - 'A' + 10; // המרה של אות A-G לבסיס 10-16
+            } else {
+                return -1; // אם לא אות תקינה, מחזירים -1
+            }
+        } else {
+            // המרה של הבסיס כמספר
+            base = parseBase(basePart);
+            if (base < 2 || base > 16) return -1; // אם הבסיס לא תקין
+        }
 
-        // Convert the number part to decimal using the parsed base
+        // המרה של מספר המערך לבסיס המתאים
         int result = 0;
-        for (char c : numberPart.toCharArray()) {
+        for (char c : numberPart.toUpperCase().toCharArray()) {
             int digitValue = Character.digit(c, base);
-            if (digitValue < 0) return -1; // Invalid character for the base
+            if (digitValue < 0) return -1; // אם הדמות לא תקינה עבור הבסיס
             result = result * base + digitValue;
         }
 
@@ -96,20 +105,23 @@ public class Ex1 {
     private static int parseBase(String baseStr) {
         if (baseStr == null || baseStr.isEmpty()) return -1;
 
+        // אם הבסיס הוא אות מ-A עד G
         if (baseStr.length() == 1 && Character.isLetter(baseStr.charAt(0))) {
             char baseChar = baseStr.charAt(0);
-            if (baseChar >= 'A' && baseChar <= 'F') {
-                return baseChar - 'A' + 10; // Convert A-F to 10-15
+            if (baseChar >= 'A' && baseChar <= 'G') {
+                return baseChar - 'A' + 10; // המרה של אות A-G לבסיס 10-16
             }
         }
 
-        try {
-            int base = Integer.parseInt(baseStr);
-            return (base >= 2 && base <= 9) ? base : -1;
-        } catch (NumberFormatException e) {
-            return -1;
+        // אם הבסיס הוא מספר
+        int base = 0;
+        for (char c : baseStr.toCharArray()) {
+            if (c < '0' || c > '9') return -1; // הבסיס חייב להיות מספרים בלבד
+            base = base * 10 + (c - '0');
         }
+        return (base >= 2 && base <= 16) ? base : -1;
     }
+
 
     /**
      * Converts a decimal number (num) to a string representation in the specified base.

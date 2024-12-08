@@ -23,7 +23,7 @@ public class Ex1Test {
 
         @Test
         void isBasisNumberTest() {
-            String[] good = {"1", "1b2", "01b2", "123bA", "0bA"};
+            String[] good = {"1", "1b2", "01b2", "123bA", "0bA", "-3"};
             for (String s : good) {
                 boolean ok = Ex1.isNumber(s);
                 assertTrue(ok);
@@ -47,9 +47,6 @@ public class Ex1Test {
             String[] arr1 = {"135b10", "100b10", "234b10"};
             assertEquals(2, Ex1.maxIndex(arr1));
 
-            String[] arr2 = {"135b", null, "234b"};
-            //assertEquals(2, Ex1.maxIndex(arr2));
-
             String[] arr3 = {"-1b10", "0b10", "10b10"};
             assertEquals(2, Ex1.maxIndex(arr3));
 
@@ -59,7 +56,7 @@ public class Ex1Test {
             String[] emptyArr = {};
             assertEquals(-1, Ex1.maxIndex(emptyArr));
 
-            String[] nullArr = {};
+            String[] nullArr = null;
             assertEquals(-1, Ex1.maxIndex(nullArr));
 
 //            String [] good = {"45", "fgh" , "558" , "a" , "1" , "fd45" , "23"};
