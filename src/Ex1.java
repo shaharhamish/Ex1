@@ -20,30 +20,47 @@ public class Ex1 {
      * @return
      */
     public static int number2Int(String num) {
-        // אם הקלט לא מכיל 'b', נניח שזה מספר בבסיס 10
+        // אם אין 'b' במילת הקלט, נניח שזה מספר בבסיס 10
         if (!num.contains("b")) {
             try {
-                return Integer.parseInt(num); // המרת המחרוזת למספר שלם בבסיס 10
+                return Integer.parseInt(num); // המרה למספר בבסיס 10
             } catch (NumberFormatException e) {
-                return -1; // אם לא מצליחים להמיר מספר לא תקין, מחזירים -1
+                return -1; // אם לא מצליחים להמיר, מחזירים -1
             }
         }
 
-        // אם כן יש 'b', ממשיכים לפי הקוד הקיים
+        // אם יש 'b', נפריד את המספר מהבסיס
         int baseIndex = num.lastIndexOf('b');
         String numberPart = num.substring(0, baseIndex);
-        int base = Integer.parseInt(num.substring(baseIndex + 1));
-        if (base == -1) return -1;
+        String basePart = num.substring(baseIndex + 1);
 
+        // בדיקה אם הבסיס הוא אות מ-A עד F (הבסיס הוגדר על ידי אות)
+        int base;
+        if (basePart.length() == 1 && Character.isLetter(basePart.charAt(0))) {
+            // המרה לאות מ-A עד F לבסיס 10
+            char baseChar = basePart.charAt(0);
+            if (baseChar >= 'A' && baseChar <= 'F') {
+                base = baseChar - 'A' + 10; // המרה של אות A-F לבסיס 10-15
+            } else {
+                return -1; // אם לא אות תקינה, מחזירים -1
+            }
+        } else {
+            // המרה של הבסיס כמספר
+            base = parseBase(basePart);
+            if (base < 2 || base > 16) return -1; // אם הבסיס לא תקין
+        }
+
+        // המרה של מספר המערך לבסיס המתאים
         int result = 0;
         for (char c : numberPart.toUpperCase().toCharArray()) {
             int digitValue = Character.digit(c, base);
-            if (digitValue < 0) return -1; // Invalid digit for the base
+            if (digitValue < 0) return -1; // אם הדמות לא תקינה עבור הבסיס
             result = result * base + digitValue;
         }
 
         return result;
     }
+
 
     /**
      * This static function checks if the given String (g) is in a valid "number"
@@ -52,7 +69,7 @@ public class Ex1 {
      * @return true iff the given String is in a number format
      */
     public static boolean isNumber(String a) {
-        // אם הקלט לא מכיל 'b', נבדוק אם מדובר במספר שלם בבסיס 10
+        // אם אין 'b' במילת הקלט, נבדוק אם מדובר במספר שלם בבסיס 10
         if (!a.contains("b")) {
             try {
                 Integer.parseInt(a); // מנסים להמיר את המחרוזת למספר בבסיס 10
@@ -62,7 +79,7 @@ public class Ex1 {
             }
         }
 
-        // אם יש 'b', ממשיכים לפי הבדיקות הקודמות
+        // אם יש 'b', נוודא שהקלט תקין
         boolean ans = true;
         if (a == null || a.isEmpty()) return false;
 
@@ -72,17 +89,31 @@ public class Ex1 {
         String numberPart = a.substring(0, baseIndex);
         String basePart = a.substring(baseIndex + 1);
 
-        // Validate base
+        // המרה של הבסיס למספר
         int base = parseBase(basePart);
-        if (base < 2 || base > 16) return false;
+        if (base < 2 || base > 16) {
+            // אם הבסיס הוא אות מ-A עד F
+            if (basePart.length() == 1 && Character.isLetter(basePart.charAt(0))) {
+                char baseChar = basePart.charAt(0);
+                if (baseChar >= 'A' && baseChar <= 'F') {
+                    base = baseChar - 'A' + 10; // המרה של אות A-F לבסיס 10-15
+                } else {
+                    return false; // אם האות אינה תקינה
+                }
+            } else {
+                return false; // אם הבסיס אינו מספר תקין
+            }
+        }
 
-        // Validate number part
+        // בדיקה אם כל הדמויות תקינות עבור הבסיס
         for (char c : numberPart.toUpperCase().toCharArray()) {
-            if (Character.digit(c, base) < 0) return false; // Invalid character for the base
+            if (Character.digit(c, base) < 0) return false; // אם הדמות לא חוקית עבור הבסיס
         }
 
         return true;
     }
+
+
 
 
     /**
@@ -126,17 +157,26 @@ public class Ex1 {
         return sb.reverse().toString().toUpperCase() + "b" + base;
     }
 
-    /**
-     * Checks if the two numbers have the same value.
-     * @param n1 first number
-     * @param n2 second number
-     * @return true iff the two numbers have the same values.
-     */
-    public static boolean equals(String n1, String n2) {
-        // Validate numbers before comparing
-        if (!isNumber(n1) || !isNumber(n2)) return false; // Hebrew: ודא שהמספרים חוקיים
-        return number2Int(n1) == number2Int(n2);
-    }
+        /**
+         * Checks if the two numbers have the same value.
+         * @param n1 first number
+         * @param n2 second number
+         * @return true iff the two numbers have the same values.
+         */
+        public static boolean equals(String n1, String n2) {
+            // Validate numbers before comparing
+            if (!isNumber(n1) || !isNumber(n2)) return false;
+
+            // Convert both numbers to their integer representations
+            int value1 = number2Int(n1);
+            int value2 = number2Int(n2);
+
+            // If either conversion fails, they are not equal
+            if (value1 == -1 || value2 == -1) return false;
+
+            // Compare integer values
+            return value1 == value2;
+        }
 
     /**
      * This static function search for the array index with the largest number
