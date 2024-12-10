@@ -10,7 +10,7 @@ public class Ex1Main {
         Scanner sc = new Scanner(System.in);
         String num1 = "", num2 = "", quit = "quit"; // משתנים לאחסון מספרי הקלט ואפשרות הסיום
 
-        while (!num1.equals(quit)) { // לולאה ראשית שפועלת עד שהמשתמש מזין "quit"
+        while (!num1.equals(quit) && !num2.equals(quit)) { // לולאה ראשית שפועלת עד שהמשתמש מזין "quit"
             System.out.println();
             System.out.println("Ex1 class solution:");
             System.out.println("Enter a string as number#1 (or \"quit\" to end the program): ");
