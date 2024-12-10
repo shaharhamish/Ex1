@@ -7,72 +7,74 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Make sure you complete all the needed JUnits
  */
 public class Ex1Test {
-        Ex1 ex1 = new Ex1();
-        @Test
-        void computeNumberTest() {
-            String s2 = "1011b2";
-            int v = Ex1.number2Int(s2);
-            assertEquals(v,11);
-            String s10 = "1011bA";
-            v = Ex1.number2Int(s10);
-            s2 = Ex1.int2Number(v,2);
-            int v2 = Ex1.number2Int(s2);
-            assertEquals(v,v2);
-            assertTrue(Ex1.equals(s10,s2));
-        }
-
-        @Test
-        void isBasisNumberTest() {
-            String[] good = {"1", "1b2", "01b2", "123bA", "0bA", "-3"};
-            for (String s : good) {
-                boolean ok = Ex1.isNumber(s);
-                assertTrue(ok);
-            }
-            String[] not_good = {"b2", "2b2", "1G3bG", " BbG", "0bbA", "!@b2", "A", "1bb2"};
-            for (String s : not_good) {
-                boolean not_ok = Ex1.isNumber(s);
-                assertFalse(not_ok);
-            }
-        }
-        @Test
-        void int2NumberTest() {
-            // Valid conversions from decimal to different bases
-            assertEquals("1011b2", Ex1.int2Number(11, 2));   // Decimal 11 to binary
-            assertEquals("1A7b16", Ex1.int2Number(423, 16)); // Decimal 423 to hexadecimal
-            assertEquals("123b10", Ex1.int2Number(123, 10)); // Decimal 123 to decimal
-            assertEquals("11b15", Ex1.int2Number(16, 15));   // Decimal 16 to base 15
-
-            // Invalid cases: Base out of range
-            assertEquals("", Ex1.int2Number(123, 1));        // Base less than 2
-            assertEquals("", Ex1.int2Number(123, 17));       // Base greater than 16
-
-            // Negative number case
-            assertEquals("", Ex1.int2Number(-10, 2));        // Negative number
-
-            // Edge cases
-            assertEquals("0b2", Ex1.int2Number(0, 2));       // Zero in binary
-            assertEquals("0b16", Ex1.int2Number(0, 16));     // Zero in hexadecimal
-            assertEquals("1b16", Ex1.int2Number(1, 16));     // Minimum positive number in base 16
-        }
+    Ex1 ex1 = new Ex1();
 
     @Test
-        void maxIndexTest() {
-            String[] arr1 = {"135b10", "100b10", "234b10"};
-            assertEquals(2, Ex1.maxIndex(arr1));
+    void computeNumberTest() {
+        String s2 = "1011b2";
+        int v = Ex1.number2Int(s2);
+        assertEquals(v, 11);
+        String s10 = "1011bA";
+        v = Ex1.number2Int(s10);
+        s2 = Ex1.int2Number(v, 2);
+        int v2 = Ex1.number2Int(s2);
+        assertEquals(v, v2);
+        assertTrue(Ex1.equals(s10, s2));
+    }
 
-            String[] arr3 = {"-1b10", "0b10", "10b10"};
-            assertEquals(2, Ex1.maxIndex(arr3));
-
-            String[] arr4 = {"-1b10", "-2b10", "-3b10"};
-            assertEquals(0, Ex1.maxIndex(arr4));
-
-            String[] emptyArr = {};
-            assertEquals(-1, Ex1.maxIndex(emptyArr));
-
-            String[] nullArr = null;
-            assertEquals(-1, Ex1.maxIndex(nullArr));
-
+    @Test
+    void isBasisNumberTest() {
+        String[] good = {"1", "1b2", "01b2", "123bA", "0bA", "-3"};
+        for (String s : good) {
+            boolean ok = Ex1.isNumber(s);
+            assertTrue(ok);
         }
+        String[] not_good = {"b2", "2b2", "1G3bG", " BbG", "0bbA", "!@b2", "A", "1bb2"};
+        for (String s : not_good) {
+            boolean not_ok = Ex1.isNumber(s);
+            assertFalse(not_ok);
+        }
+    }
+
+    @Test
+    void int2NumberTest() {
+        // Valid conversions from decimal to different bases
+        assertEquals("1011b2", Ex1.int2Number(11, 2));   // Decimal 11 to binary
+        assertEquals("1A7b16", Ex1.int2Number(423, 16)); // Decimal 423 to hexadecimal
+        assertEquals("123b10", Ex1.int2Number(123, 10)); // Decimal 123 to decimal
+        assertEquals("11b15", Ex1.int2Number(16, 15));   // Decimal 16 to base 15
+
+        // Invalid cases: Base out of range
+        assertEquals("", Ex1.int2Number(123, 1));        // Base less than 2
+        assertEquals("", Ex1.int2Number(123, 17));       // Base greater than 16
+
+        // Negative number case
+        assertEquals("", Ex1.int2Number(-10, 2));        // Negative number
+
+        // Edge cases
+        assertEquals("0b2", Ex1.int2Number(0, 2));       // Zero in binary
+        assertEquals("0b16", Ex1.int2Number(0, 16));     // Zero in hexadecimal
+        assertEquals("1b16", Ex1.int2Number(1, 16));     // Minimum positive number in base 16
+    }
+
+    @Test
+    void maxIndexTest() {
+        String[] arr1 = {"135b10", "100b10", "234b10"};
+        assertEquals(2, Ex1.maxIndex(arr1));
+
+        String[] arr3 = {"-1b10", "0b10", "10b10"};
+        assertEquals(2, Ex1.maxIndex(arr3));
+
+        String[] arr4 = {"-1b10", "-2b10", "-3b10"};
+        assertEquals(0, Ex1.maxIndex(arr4));
+
+        String[] emptyArr = {};
+        assertEquals(-1, Ex1.maxIndex(emptyArr));
+
+        String[] nullArr = null;
+        assertEquals(-1, Ex1.maxIndex(nullArr));
+
+    }
 
     @Test
     public void EqualsTest() {
@@ -125,4 +127,4 @@ public class Ex1Test {
             }
         }
     }
-    }
+}

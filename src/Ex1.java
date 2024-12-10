@@ -148,25 +148,6 @@ public class Ex1 {
     }
 
     /**
-     * Splits the input string into two separate numbers (num1 and num2).
-     *
-     * @param input a single string containing two numbers separated by a space
-     * @return a String array containing the two numbers, or null if invalid
-     */
-    public static String[] splitNumbers(String input) {
-        if (input == null || input.trim().isEmpty() || input.startsWith(" ")) return null;
-
-        String[] parts = input.trim().split("\\s+");
-        if (parts.length != 2) return null; // Ensure exactly two parts
-
-        if (isNumber(parts[0]) && isNumber(parts[1])) {
-            return parts; // Return the two numbers if both are valid
-        }
-
-        return null; // Return null if either part is invalid
-    }
-
-    /**
      * Checks if two numbers (n1, n2) have the same value.
      *
      * @param n1 the first number
