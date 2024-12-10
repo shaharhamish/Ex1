@@ -142,7 +142,9 @@ public class Ex1 {
             num /= base;
         } while (num > 0);
 
-        return sb.reverse().toString().toUpperCase() + "b" + base;
+        // Append the base representation
+        String baseSuffix = base <= 10 ? "b" + base : "b" + (char) ('A' + (base - 10));
+        return sb.reverse().toString().toUpperCase() + baseSuffix;
     }
 
     /**
