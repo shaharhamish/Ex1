@@ -72,26 +72,16 @@ public class Ex1Test {
             String[] nullArr = null;
             assertEquals(-1, Ex1.maxIndex(nullArr));
 
-//            String [] good = {"45", "fgh" , "558" , "a" , "1" , "fd45" , "23"};
-//            for (int i = 0; i < good.length; i++) {
-//                int maxindex = ex1.maxIndex(good);
-//                assertTrue(ok);
-//            }
-//
-//            String [] not_good = {};
-//            for (int i = 0; i < not_good.length; i++) {
-//                int maxindex = ex1.maxIndex(not_good);
-//                assertFalse(not_ok);
-//            }
         }
 
     @Test
-    public void testEquals() {
+    public void EqualsTest() {
         assertFalse(Ex1.equals("135b", "135b10"));
         assertFalse(Ex1.equals("100111b2", "63b10"));
         assertFalse(Ex1.equals("12345b6", "77b10"));
         assertFalse(Ex1.equals("135b", "136b10"));
         assertFalse(Ex1.equals("100111b2", "62b10"));
+        assertFalse(Ex1.equals(null, ""));
 
         assertTrue(Ex1.equals("135", "135b10"));
         assertTrue(Ex1.equals("011110b2", "30b10"));

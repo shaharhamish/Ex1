@@ -172,6 +172,10 @@ public class Ex1 {
      * @return true if both numbers are equal in value, false otherwise
      */
     public static boolean equals(String n1, String n2) {
+        if (n1 == null || n2 == null) {
+            return false; // Return false if either input is null
+        }
+
         int int1 = number2Int(n1);
         int int2 = number2Int(n2);
 
@@ -192,13 +196,28 @@ public class Ex1 {
      * @return the index of the largest number, or -1 if the array is null or empty
      */
     public static int maxIndex(String[] arr) {
-        if (arr == null || arr.length == 0) return -1;
+        if (arr == null || arr.length == 0) {
+            return -1; // Handle null or empty array
+        }
 
         int maxIndex = -1;
         int maxValue = Integer.MIN_VALUE;
 
         for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == null) {
+                continue; // Skip null elements in the array
+            }
+
+            // Check and remove 'b10' if present
+            if (arr[i].contains("b10")) {
+                arr[i] = arr[i].substring(0, arr[i].indexOf("b10")); // Remove 'b10'
+            }
+
             int value = number2Int(arr[i]);
+            if (value == -1) {
+                continue; // Skip invalid numbers
+            }
+
             if (value > maxValue) {
                 maxValue = value;
                 maxIndex = i;
