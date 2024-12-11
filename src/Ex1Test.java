@@ -59,18 +59,19 @@ public class Ex1Test {
 
     @Test
     void maxIndexTest() {
+        // Normal case with positive numbers
         String[] arr1 = {"135b10", "100b10", "234b10"};
         assertEquals(2, Ex1.maxIndex(arr1));
-
+        // Mixed case with zero and positive numbers
         String[] arr3 = {"-1b10", "0b10", "10b10"};
         assertEquals(2, Ex1.maxIndex(arr3));
-
+        // All negative numbers
         String[] arr4 = {"-1b10", "-2b10", "-3b10"};
         assertEquals(0, Ex1.maxIndex(arr4));
-
+        // Empty array case
         String[] emptyArr = {};
         assertEquals(-1, Ex1.maxIndex(emptyArr));
-
+        // Null array case
         String[] nullArr = null;
         assertEquals(-1, Ex1.maxIndex(nullArr));
 
@@ -78,6 +79,7 @@ public class Ex1Test {
 
     @Test
     public void EqualsTest() {
+        // Cases where numbers are not equivalent
         assertFalse(Ex1.equals("135b", "135b10"));
         assertFalse(Ex1.equals("100111b2", "63b10"));
         assertFalse(Ex1.equals("12345b6", "77b10"));
@@ -85,6 +87,7 @@ public class Ex1Test {
         assertFalse(Ex1.equals("100111b2", "62b10"));
         assertFalse(Ex1.equals(null, ""));
 
+        // Cases where numbers are equivalent
         assertTrue(Ex1.equals("135", "135b10"));
         assertTrue(Ex1.equals("011110b2", "30b10"));
         assertTrue(Ex1.equals("ABCb16", "2748"));
@@ -116,13 +119,15 @@ public class Ex1Test {
 
     @Test
     void conversionConsistencyTest() {
-        int[] testValues = {0, 1, 42, 255, 1023};
-        int[] bases = {2, 8, 10, 16};
+        int[] testValues = {0, 1, 42, 255, 1023}; // Test values
+        int[] bases = {2, 8, 10, 16}; // Supported bases
 
         for (int value : testValues) {
             for (int base : bases) {
+                // Convert to base representation and back to decimal
                 String representation = Ex1.int2Number(value, base);
                 int backToDecimal = Ex1.number2Int(representation);
+                // Assert consistency
                 assertEquals(value, backToDecimal, "Failed for value: " + value + " in base: " + base);
             }
         }
