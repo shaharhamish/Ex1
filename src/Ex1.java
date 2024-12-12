@@ -14,6 +14,10 @@ public class Ex1 {
      * @return the integer value of the number in decimal, or -1 if invalid
      */
     public static int number2Int(String num) {
+        // If num is null, return -1
+        if (num == null) {
+            return -1;
+        }
         // If there is no 'b' in the input word, assume it is a base 10 number
         if (!num.contains("b")) {
             try {

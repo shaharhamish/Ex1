@@ -114,7 +114,7 @@ public class Ex1Test {
         assertEquals(-1, Ex1.number2Int("invalid")); // Invalid input format
         assertEquals(-1, Ex1.number2Int("123b20")); // Base greater than 16
         assertEquals(-1, Ex1.number2Int("123b1")); // Base less than 2
-        //assertEquals(-1, Ex1.number2Int(null)); // Null input
+        assertEquals(-1, Ex1.number2Int(null)); // Null input
     }
 
     @Test
