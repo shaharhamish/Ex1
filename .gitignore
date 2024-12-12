@@ -5,6 +5,7 @@ out/
 .idea/
 Ex1.iml
 
+
 ### Eclipse ###
 .apt_generated
 .classpath
@@ -17,6 +18,8 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 Ex1Sol.jar
+Ex1.iml
+.idea
 
 ### NetBeans ###
 /nbproject/private/
