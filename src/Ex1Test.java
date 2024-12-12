@@ -34,6 +34,13 @@ public class Ex1Test {
             boolean not_ok = Ex1.isNumber(s);
             assertFalse(not_ok);
         }
+        // Invalid numbers
+        assertFalse(Ex1.isNumber(null)); // Null input
+        assertFalse(Ex1.isNumber("")); // Empty string
+        assertFalse(Ex1.isNumber("12b")); // Missing base
+        assertFalse(Ex1.isNumber("12b20")); // Base out of range
+        assertFalse(Ex1.isNumber("G1b16")); // Invalid digit for base 16
+        assertFalse(Ex1.isNumber("123bH")); // Invalid base character
     }
 
     @Test
@@ -67,13 +74,16 @@ public class Ex1Test {
         assertEquals(2, Ex1.maxIndex(arr3));
         // All negative numbers
         String[] arr4 = {"-1b10", "-2b10", "-3b10"};
-        assertEquals(0, Ex1.maxIndex(arr4));
+        assertEquals(-1, Ex1.maxIndex(arr4));
         // Empty array case
         String[] emptyArr = {};
         assertEquals(-1, Ex1.maxIndex(emptyArr));
         // Null array case
         String[] nullArr = null;
         assertEquals(-1, Ex1.maxIndex(nullArr));
+        //Invalid arrays
+        String[] arr5 = {"123", "invalid", "456"};
+        assertEquals(2, Ex1.maxIndex(arr5)); // Skip invalid, largest is at index 2
 
     }
 
@@ -94,6 +104,11 @@ public class Ex1Test {
         assertTrue(Ex1.equals("0", "0b2"));
         assertTrue(Ex1.equals("1011bA", "1011bA"));
         assertTrue(Ex1.equals("012b10", "12b10")); // Test with leading zeros
+
+        // Invalid inputs
+        assertFalse(Ex1.equals(null, "123"));
+        assertFalse(Ex1.equals("123", null));
+        assertFalse(Ex1.equals(null, null));
     }
 
     @Test

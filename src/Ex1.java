@@ -201,7 +201,7 @@ public class Ex1 {
             }
 
             int value = number2Int(arr[i]);
-            if (value == -1) {
+            if (value < 0) {
                 continue; // Skip invalid numbers
             }
 
