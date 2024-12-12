@@ -9,6 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Ex1Test {
     Ex1 ex1 = new Ex1();
 
+    /**
+     * Tests the functionality of `number2Int` and `int2Number` for correct conversions
+     * between string representations of numbers in different bases and their integer values.
+     */
     @Test
     void computeNumberTest() {
         String s2 = "1011b2";
@@ -22,6 +26,10 @@ public class Ex1Test {
         assertTrue(Ex1.equals(s10, s2));
     }
 
+    /**
+     * Tests the `isNumber` function to verify it correctly identifies valid and invalid numbers
+     * in various formats and bases.
+     */
     @Test
     void isBasisNumberTest() {
         String[] good = {"1", "1b2", "01b2", "123bA", "0bA", "-3"};
@@ -43,6 +51,10 @@ public class Ex1Test {
         assertFalse(Ex1.isNumber("123bH")); // Invalid base character
     }
 
+    /**
+     * Tests the `int2Number` function for correct conversions of integers to string representations
+     * in specified bases, and ensures invalid inputs return an empty string.
+     */
     @Test
     void int2NumberTest() {
         // Valid conversions from decimal to different bases
@@ -64,6 +76,10 @@ public class Ex1Test {
         assertEquals("1b16", Ex1.int2Number(1, 16));     // Minimum positive number in base 16
     }
 
+    /**
+     * Tests the `maxIndex` function for finding the index of the largest number
+     * in an array of string representations of numbers.
+     */
     @Test
     void maxIndexTest() {
         // Normal case with positive numbers
@@ -87,6 +103,10 @@ public class Ex1Test {
 
     }
 
+    /**
+     * Tests the `equals` function to verify if two string representations of numbers
+     * are equivalent, even if in different bases.
+     */
     @Test
     public void EqualsTest() {
         // Cases where numbers are not equivalent
@@ -111,6 +131,10 @@ public class Ex1Test {
         assertFalse(Ex1.equals(null, null));
     }
 
+    /**
+     * Tests edge cases for functions to ensure correct behavior with boundary values
+     * and unusual inputs.
+     */
     @Test
     void edgeCasesTest() {
         assertEquals(0, Ex1.number2Int("0b2")); // Smallest valid binary
@@ -124,6 +148,9 @@ public class Ex1Test {
         assertEquals("", Ex1.int2Number(-5, 10)); // Negative number
     }
 
+    /**
+     * Tests invalid inputs for functions to ensure they handle errors gracefully.
+     */
     @Test
     void invalidInputsTest() {
         assertEquals(-1, Ex1.number2Int("invalid")); // Invalid input format
@@ -132,6 +159,10 @@ public class Ex1Test {
         assertEquals(-1, Ex1.number2Int(null)); // Null input
     }
 
+    /**
+     * Tests the consistency of conversions between integers and their string representations
+     * in different bases.
+     */
     @Test
     void conversionConsistencyTest() {
         int[] testValues = {0, 1, 42, 255, 1023}; // Test values

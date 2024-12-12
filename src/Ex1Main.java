@@ -46,7 +46,7 @@ public class Ex1Main {
             System.out.println("Enter a base for output: (a number [2,16]) ");
             int base = sc.nextInt(); // getting the required base
             if (base < 2 || base > 16) { // Checking the valid range of the base
-                System.out.println("ERR: base must be in the range [2,16]");
+                System.out.println("ERR: wrong base, should be [2,16], got (" + base + ")");
                 continue; // Skips the continuation of the loop in case of an incorrect base
             }
             // Calculation and display of results
